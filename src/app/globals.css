@@ -33,8 +33,8 @@ body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background:
   box-shadow: 0 4px 20px rgba(0,0,0,0.15); overflow: hidden;
 }
 .navbar-email { padding: 10px 14px; font-size: 12px; color: #888; border-bottom: 1px solid #f0f0f0; word-break: break-all; }
-.navbar-signout { width: 100%; padding: 10px 14px; text-align: left; background: none; border: none; font-size: 13px; color: #e05; cursor: pointer; font-weight: 600; }
-.navbar-signout:hover { background: #fff5f5; }
+.navbar-signout { width: 100%; padding: 10px 14px; text-align: left; background: none; border: none; font-size: 13px; color: #1F4E79; cursor: pointer; font-weight: 600; }
+.navbar-signout:hover { background: #f0f5fa; }
 
 /* ── Auth Modal ── */
 .auth-overlay {
@@ -244,6 +244,23 @@ tbody tr:hover td { filter: brightness(0.96); }
 .fav-item-left { flex: 1; min-width: 0; }
 .fav-song { display: block; font-size: 14px; font-weight: 600; color: #222; }
 .fav-tours { display: block; font-size: 11px; color: #aaa; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Favorites login gate ── */
+.fav-panel-wrap { position: relative; }
+.fav-login-gate {
+  position: absolute; inset: 0; min-height: 180px;
+  background: linear-gradient(to bottom, rgba(238,242,247,0) 0%, rgba(238,242,247,0.85) 35%, rgba(238,242,247,1) 60%);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 32px;
+}
+.fav-login-box { text-align: center; }
+.fav-login-box p { font-size: 14px; color: #555; margin-bottom: 12px; font-weight: 500; }
+.fav-login-btn {
+  padding: 9px 28px; background: #1F4E79; color: #fff;
+  border: none; border-radius: 20px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background 0.15s;
+}
+.fav-login-btn:hover { background: #174069; }
 
 /* ── Empty / Toast ── */
 .empty-state { padding: 50px 20px; text-align: center; color: #aaa; font-size: 14px; }

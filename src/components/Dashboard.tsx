@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { supabase } from '@/lib/supabase'
+import AuthModal from './AuthModal'
 
 interface DashboardProps {
   concerts: string[]
@@ -46,6 +48,14 @@ export default function Dashboard({ concerts, setlists, artistName }: DashboardP
   const [toast, setToast] = useState({ msg: '', show: false })
   const tableRef = useRef<HTMLTableElement>(null)
   const [ytModal, setYtModal] = useState<{ title: string; videoId: string | null; loading: boolean; minimized: boolean } | null>(null)
+  const [user, setUser] = useState<boolean>(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setUser(!!data.session))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => setUser(!!session))
+    return () => subscription.unsubscribe()
+  }, [])
 
   // Derived
   const sel = allMode ? concerts : concerts.filter(c => selected.has(c))
@@ -436,7 +446,7 @@ export default function Dashboard({ concerts, setlists, artistName }: DashboardP
 
       {/* Favorites Panel */}
       {activeTab === 'favorites' && (
-        <div>
+        <div className="fav-panel-wrap">
           {favorites.size === 0 ? (
             <div className="empty-state">还没有收藏任何歌曲，去歌单里点 ♥ 吧～</div>
           ) : (
@@ -456,8 +466,17 @@ export default function Dashboard({ concerts, setlists, artistName }: DashboardP
               })}
             </div>
           )}
+          {!user && (
+            <div className="fav-login-gate">
+              <div className="fav-login-box">
+                <p>登录后即可查看已收藏歌单</p>
+                <button className="fav-login-btn" onClick={() => setShowAuthModal(true)}>登录 / 注册</button>
+              </div>
+            </div>
+          )}
         </div>
       )}
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
 
       {/* Toast */}
       <div id="toast" className={toast.show ? 'show' : ''}>{toast.msg}</div>
