@@ -245,17 +245,14 @@ tbody tr:hover td { filter: brightness(0.96); }
 .fav-song { display: block; font-size: 14px; font-weight: 600; color: #222; }
 .fav-tours { display: block; font-size: 11px; color: #aaa; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* ── Favorites login gate ── */
-/* 48px navbar + ~80px filter + ~48px tabs + ~40px dashboard padding */
-.fav-panel-wrap { position: relative; min-height: calc(100vh - 216px); }
-.fav-login-gate {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(238,242,247,0) 0%, rgba(238,242,247,0.95) 30%, rgba(238,242,247,1) 50%);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 50;
+/* ── Favorites locked state ── */
+.fav-locked {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: calc(100vh - 280px);
+  text-align: center; gap: 14px;
 }
-.fav-login-box { text-align: center; }
-.fav-login-box p { font-size: 15px; color: #444; margin-bottom: 14px; font-weight: 500; }
+.fav-locked-icon { font-size: 40px; color: #ddd; }
+.fav-locked-text { font-size: 15px; color: #666; font-weight: 500; }
 .fav-login-btn {
   padding: 10px 32px; background: #1F4E79; color: #fff;
   border: none; border-radius: 20px; font-size: 14px; font-weight: 600;

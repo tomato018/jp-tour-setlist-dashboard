@@ -446,35 +446,31 @@ export default function Dashboard({ concerts, setlists, artistName }: DashboardP
 
       {/* Favorites Panel */}
       {activeTab === 'favorites' && (
-        <div className="fav-panel-wrap">
-          {favorites.size === 0 ? (
-            <div className="empty-state">还没有收藏任何歌曲，去歌单里点 ♥ 吧～</div>
-          ) : (
-            <div className="fav-list">
-              {[...favorites].map(song => {
-                const tours = concerts.filter(c => SETS[c].has(song))
-                return (
-                  <div key={song} className="fav-item">
-                    <div className="fav-item-left">
-                      <span className="fav-song">{song}</span>
-                      <span className="fav-tours">{tours.join(' · ')}</span>
-                    </div>
-                    <button className="btn-fav active" onClick={() => toggleFavorite(song)} title="取消收藏">♥</button>
-                    <button className="btn-play" onClick={() => playSong(tours[0], song)} title="在 YouTube 播放">▶</button>
+        !user ? (
+          <div className="fav-locked">
+            <div className="fav-locked-icon">♥</div>
+            <p className="fav-locked-text">登录后即可查看已收藏歌单</p>
+            <button className="fav-login-btn" onClick={() => setShowAuthModal(true)}>登录 / 注册</button>
+          </div>
+        ) : favorites.size === 0 ? (
+          <div className="empty-state">还没有收藏任何歌曲，去歌单里点 ♥ 吧～</div>
+        ) : (
+          <div className="fav-list">
+            {[...favorites].map(song => {
+              const tours = concerts.filter(c => SETS[c].has(song))
+              return (
+                <div key={song} className="fav-item">
+                  <div className="fav-item-left">
+                    <span className="fav-song">{song}</span>
+                    <span className="fav-tours">{tours.join(' · ')}</span>
                   </div>
-                )
-              })}
-            </div>
-          )}
-          {!user && (
-            <div className="fav-login-gate">
-              <div className="fav-login-box">
-                <p>登录后即可查看已收藏歌单</p>
-                <button className="fav-login-btn" onClick={() => setShowAuthModal(true)}>登录 / 注册</button>
-              </div>
-            </div>
-          )}
-        </div>
+                  <button className="btn-fav active" onClick={() => toggleFavorite(song)} title="取消收藏">♥</button>
+                  <button className="btn-play" onClick={() => playSong(tours[0], song)} title="在 YouTube 播放">▶</button>
+                </div>
+              )
+            })}
+          </div>
+        )
       )}
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
 
