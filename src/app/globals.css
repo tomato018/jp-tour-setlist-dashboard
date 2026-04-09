@@ -3,6 +3,86 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background: #eef2f7; color: #333; }
 
+/* ── Navbar ── */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: #1F4E79; color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; height: 48px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.navbar-brand { font-size: 14px; font-weight: 700; letter-spacing: 0.3px; opacity: 0.95; }
+.navbar-right { display: flex; align-items: center; }
+.navbar-login {
+  font-size: 13px; font-weight: 600; padding: 6px 16px;
+  border: 1.5px solid rgba(255,255,255,0.6); border-radius: 20px;
+  background: transparent; color: #fff; cursor: pointer; transition: all 0.18s;
+}
+.navbar-login:hover { background: rgba(255,255,255,0.15); }
+.navbar-user { position: relative; }
+.navbar-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.5);
+  color: #fff; font-size: 12px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all 0.18s;
+}
+.navbar-avatar:hover { background: rgba(255,255,255,0.3); }
+.navbar-menu {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  background: #fff; border-radius: 10px; min-width: 180px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15); overflow: hidden;
+}
+.navbar-email { padding: 10px 14px; font-size: 12px; color: #888; border-bottom: 1px solid #f0f0f0; word-break: break-all; }
+.navbar-signout { width: 100%; padding: 10px 14px; text-align: left; background: none; border: none; font-size: 13px; color: #e05; cursor: pointer; font-weight: 600; }
+.navbar-signout:hover { background: #fff5f5; }
+
+/* ── Auth Modal ── */
+.auth-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; padding: 20px;
+}
+.auth-modal {
+  background: #fff; border-radius: 14px; width: 100%; max-width: 380px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2); overflow: hidden;
+}
+.auth-header {
+  background: #1F4E79; color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; font-size: 15px; font-weight: 700;
+}
+.auth-close { background: none; border: none; color: #fff; cursor: pointer; font-size: 18px; line-height: 1; padding: 2px 6px; border-radius: 4px; }
+.auth-close:hover { background: rgba(255,255,255,0.15); }
+.auth-body { padding: 20px; }
+.auth-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 10px; border: 1.5px solid #ddd; border-radius: 8px;
+  background: #fff; font-size: 14px; font-weight: 600; color: #333; cursor: pointer; transition: all 0.15s;
+}
+.auth-google:hover { border-color: #aaa; background: #fafafa; }
+.auth-divider { display: flex; align-items: center; gap: 10px; margin: 16px 0; color: #bbb; font-size: 12px; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #eee; }
+.auth-label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; }
+.auth-input {
+  width: 100%; padding: 9px 12px; border: 1.5px solid #ddd; border-radius: 8px;
+  font-size: 14px; outline: none; transition: border-color 0.15s;
+}
+.auth-input:focus { border-color: #1F4E79; }
+.auth-error { font-size: 12px; color: #e05; margin-top: 6px; }
+.auth-submit {
+  width: 100%; margin-top: 12px; padding: 10px;
+  background: #1F4E79; color: #fff; border: none; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.auth-submit:hover:not(:disabled) { background: #174069; }
+.auth-submit:disabled { opacity: 0.6; cursor: default; }
+.auth-hint { font-size: 11px; color: #aaa; margin-top: 10px; line-height: 1.5; }
+.auth-sent { padding: 30px 20px; text-align: center; }
+.auth-sent-icon { font-size: 40px; margin-bottom: 12px; }
+.auth-sent p { font-size: 13px; color: #666; }
+.auth-sent strong { display: block; font-size: 14px; color: #333; margin: 6px 0; }
+.auth-sent-hint { font-size: 12px; color: #aaa; margin-top: 10px; line-height: 1.5; }
+
 .dashboard { max-width: 100%; padding: 20px 24px; }
 
 .title { font-size: 20px; font-weight: 700; color: #1F4E79; text-align: center; letter-spacing: 0.5px; margin-bottom: 16px; }
