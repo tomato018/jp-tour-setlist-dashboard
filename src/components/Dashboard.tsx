@@ -418,7 +418,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
                       <span className="card-num">{i + 1}.</span>
                       <span className="card-song">{s}</span>
                       <button className="btn-play" onClick={() => playSong(c, s)} title="在 YouTube 播放">▶</button>
-                      <button className={`btn-fav${favorites.has(s) ? ' active' : ''}`} onClick={() => toggleFavorite(s)} title={favorites.has(s) ? '取消收藏' : '收藏'}>{favorites.has(s) ? '♥' : '♡'}</button>
+                      <button className={`btn-fav${favorites.has(s) ? ' active' : ''}`} onClick={() => toggleFavorite(s)} title={favorites.has(s) ? '取消收藏' : '收藏'}>♥</button>
                     </div>
                   ))}
                 </div>
