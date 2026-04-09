@@ -34,7 +34,11 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
   const [selected, setSelected] = useState<Set<string>>(() => new Set(concerts))
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
-  const [activeTab, setActiveTab] = useState<'stats' | 'setlist'>('stats')
+  const [activeTab, setActiveTab] = useState<'stats' | 'setlist' | 'favorites'>('stats')
+  const [favorites, setFavorites] = useState<Set<string>>(() => {
+    if (typeof window === 'undefined') return new Set()
+    try { return new Set(JSON.parse(localStorage.getItem('oor-favorites') ?? '[]')) } catch { return new Set() }
+  })
   const [sortOrder, setSortOrder] = useState<SortOrder>(null)
   const colWidths = useRef<Record<number, number>>({})
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -124,6 +128,15 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
 
     return () => cleanups.forEach(fn => fn())
   }) // no deps — runs after every render
+
+  // Favorites
+  function toggleFavorite(song: string) {
+    const next = new Set(favorites)
+    if (next.has(song)) { next.delete(song); showToastMsg('已取消收藏') }
+    else { next.add(song); showToastMsg('❤️ 已收藏') }
+    localStorage.setItem('oor-favorites', JSON.stringify([...next]))
+    setFavorites(next)
+  }
 
   // Toast
   function showToastMsg(msg: string) {
@@ -305,6 +318,10 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
           className={`tab-btn${activeTab === 'setlist' ? ' active' : ''}`}
           onClick={() => setActiveTab('setlist')}
         >🎵 歌单</button>
+        <button
+          className={`tab-btn${activeTab === 'favorites' ? ' active' : ''}`}
+          onClick={() => setActiveTab('favorites')}
+        >❤️ 收藏{favorites.size > 0 && ` (${favorites.size})`}</button>
       </div>
 
       {/* Stats Panel */}
@@ -400,6 +417,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
                     <div key={i} className="card-item">
                       <span className="card-num">{i + 1}.</span>
                       <span className="card-song">{s}</span>
+                      <button className={`btn-fav${favorites.has(s) ? ' active' : ''}`} onClick={() => toggleFavorite(s)} title={favorites.has(s) ? '取消收藏' : '收藏'}>♥</button>
                       <button className="btn-play" onClick={() => playSong(c, s)} title="在 YouTube 播放">▶</button>
                     </div>
                   ))}
@@ -412,6 +430,31 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
             )
           })}
         </div>
+        </div>
+      )}
+
+      {/* Favorites Panel */}
+      {activeTab === 'favorites' && (
+        <div>
+          {favorites.size === 0 ? (
+            <div className="empty-state">还没有收藏任何歌曲，去歌单里点 ♥ 吧～</div>
+          ) : (
+            <div className="fav-list">
+              {[...favorites].map(song => {
+                const tours = concerts.filter(c => SETS[c].has(song))
+                return (
+                  <div key={song} className="fav-item">
+                    <div className="fav-item-left">
+                      <span className="fav-song">{song}</span>
+                      <span className="fav-tours">{tours.join(' · ')}</span>
+                    </div>
+                    <button className="btn-fav active" onClick={() => toggleFavorite(song)} title="取消收藏">♥</button>
+                    <button className="btn-play" onClick={() => playSong(tours[0], song)} title="在 YouTube 播放">▶</button>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       )}
 

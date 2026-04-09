@@ -148,6 +148,22 @@ tbody tr:hover td { filter: brightness(0.96); }
 }
 .btn-play:hover { color: #1F4E79; }
 
+/* ── Favorites ── */
+.btn-fav {
+  background: none; border: none; cursor: pointer;
+  color: #ddd; font-size: 14px; padding: 2px 4px; border-radius: 3px;
+  flex-shrink: 0; transition: color 0.15s; line-height: 1;
+}
+.btn-fav:hover { color: #e05; }
+.btn-fav.active { color: #e05; }
+.fav-list { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 14px; }
+.fav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid #f0f3f7; transition: background 0.1s; }
+.fav-item:last-child { border-bottom: none; }
+.fav-item:hover { background: #f5f9ff; }
+.fav-item-left { flex: 1; min-width: 0; }
+.fav-song { display: block; font-size: 14px; font-weight: 600; color: #222; }
+.fav-tours { display: block; font-size: 11px; color: #aaa; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 /* ── Empty / Toast ── */
 .empty-state { padding: 50px 20px; text-align: center; color: #aaa; font-size: 14px; }
 #toast {
