@@ -103,6 +103,18 @@ Example data: [`supabase/seed.sql`](supabase/seed.sql)
 
 ---
 
+## About Setlist Data
+
+This project does not include a data scraper. Data quality directly determines the value of your dashboard — we recommend using sources you can personally verify:
+
+- **Hand-curated (recommended)** — cross-referenced from tour pamphlets, concert photos, or video timestamps. This is how the OOR data in this repo was built, and it's the most accurate approach.
+- **[setlist.fm](https://www.setlist.fm)** — a UGC community platform with broad coverage for popular artists. Useful as a starting point, but accuracy varies by artist and tour. Always verify before importing.
+- **Fan communities** — some artists have dedicated setlist-tracking communities (e.g. live-log threads on Twitter/X or fan wikis) that can serve as a cross-reference.
+
+If you've carefully curated data for an artist and want to share it, feel free to open an issue — community contributions are welcome.
+
+---
+
 ## Getting a YouTube API Key
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
