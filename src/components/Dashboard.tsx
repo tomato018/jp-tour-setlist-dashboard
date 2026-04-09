@@ -193,8 +193,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
   async function playSong(concert: string, song: string) {
     setYtModal({ title: `${concert} — ${song}`, videoId: null, loading: true, minimized: false })
     try {
-      const year = concert.match(/\d{4}/)?.[0] ?? ''
-      const q = `ONE OK ROCK ${song} ${year} live`.trim()
+      const q = `ONE OK ROCK ${song} ${concert} live`
       const res = await fetch(`/api/youtube?q=${encodeURIComponent(q)}`)
       const { videoId } = await res.json()
       setYtModal({ title: `${concert} — ${song}`, videoId, loading: false, minimized: false })
