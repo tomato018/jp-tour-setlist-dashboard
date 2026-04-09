@@ -30,7 +30,7 @@ body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background:
 .chip input { display: none; }
 
 /* ── Tabs ── */
-.tab-bar { display: flex; gap: 0; margin-bottom: 14px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.tab-bar { display: flex; gap: 0; margin-bottom: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 .tab-btn {
   flex: 1; padding: 11px 0; font-size: 14px; font-weight: 600;
   border: none; cursor: pointer; transition: all 0.18s; background: #fff; color: #888;
@@ -81,7 +81,7 @@ tbody tr:hover td { filter: brightness(0.96); }
 .setlist-notice {
   font-size: 12px; color: #888; background: #f8fafc;
   border: 1px solid #e2e8f0; border-radius: 8px;
-  padding: 8px 14px; margin-bottom: 12px; line-height: 1.6;
+  padding: 10px 16px; margin: 14px 0 16px; line-height: 1.7;
 }
 
 /* ── Setlist grid ── */
