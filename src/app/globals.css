@@ -246,13 +246,16 @@ tbody tr:hover td { filter: brightness(0.96); }
 .fav-tours { display: block; font-size: 11px; color: #aaa; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ── Favorites login gate ── */
-.fav-panel-wrap { position: relative; min-height: 60vh; }
+.fav-panel-wrap { position: relative; }
 .fav-login-gate {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(238,242,247,0) 0%, rgba(238,242,247,0.9) 30%, rgba(238,242,247,1) 50%);
+  position: fixed;
+  top: 48px; /* navbar height */
+  left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(238,242,247,0) 0%, rgba(238,242,247,0.95) 25%, rgba(238,242,247,1) 40%);
   display: flex; align-items: center; justify-content: center;
+  z-index: 50;
 }
-.fav-login-box { text-align: center; margin-top: 20%; }
+.fav-login-box { text-align: center; }
 .fav-login-box p { font-size: 15px; color: #444; margin-bottom: 14px; font-weight: 500; }
 .fav-login-btn {
   padding: 10px 32px; background: #1F4E79; color: #fff;
