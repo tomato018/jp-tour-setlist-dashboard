@@ -93,7 +93,7 @@ tbody tr:hover td { filter: brightness(0.96); }
 .card-item:last-child { border-bottom: none; }
 .card-item:hover { background: #f5f9ff; }
 .card-num { width: 28px; color: #bbb; font-size: 12px; flex-shrink: 0; }
-.card-song { color: #222; font-weight: 500; }
+.card-song { color: #222; font-weight: 500; flex: 1; }
 .card-footer { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid #f0f3f7; background: #fafbfd; }
 .btn-action {
   flex: 1; padding: 7px 0; border-radius: 6px; border: 1.5px solid;
@@ -143,7 +143,7 @@ tbody tr:hover td { filter: brightness(0.96); }
 .btn-play {
   background: none; border: none; cursor: pointer;
   color: #bbb; font-size: 13px; padding: 2px 4px; border-radius: 3px;
-  margin-left: auto; flex-shrink: 0; transition: color 0.15s;
+  flex-shrink: 0; transition: color 0.15s;
   line-height: 1;
 }
 .btn-play:hover { color: #1F4E79; }
@@ -151,7 +151,7 @@ tbody tr:hover td { filter: brightness(0.96); }
 /* ── Favorites ── */
 .btn-fav {
   background: none; border: none; cursor: pointer;
-  color: #ddd; font-size: 14px; padding: 2px 4px; border-radius: 3px;
+  color: #ccc; font-size: 16px; padding: 2px 4px; border-radius: 3px;
   flex-shrink: 0; transition: color 0.15s; line-height: 1;
 }
 .btn-fav:hover { color: #e05; }
