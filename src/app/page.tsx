@@ -24,7 +24,7 @@ async function getData(): Promise<{ concerts: string[]; setlists: Record<string,
   const { data: artist } = await supabase
     .from('artists')
     .select('id')
-    .eq('name', 'ONE OK ROCK')
+    .eq('name', process.env.NEXT_PUBLIC_ARTIST_NAME!)
     .single()
 
   if (!artist) return { concerts: [], setlists: {} }
@@ -55,5 +55,5 @@ async function getData(): Promise<{ concerts: string[]; setlists: Record<string,
 
 export default async function Home() {
   const { concerts, setlists } = await getData()
-  return <Dashboard concerts={concerts} setlists={setlists} />
+  return <Dashboard concerts={concerts} setlists={setlists} artistName={process.env.NEXT_PUBLIC_ARTIST_NAME!} />
 }

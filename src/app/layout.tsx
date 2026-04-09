@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ONE OK ROCK Concert Setlist Dashboard",
-  description: "2010–2025 tour setlist statistics for ONE OK ROCK",
+  title: `${process.env.NEXT_PUBLIC_ARTIST_NAME} Concert Setlist Dashboard`,
+  description: `Tour setlist statistics for ${process.env.NEXT_PUBLIC_ARTIST_NAME}`,
 };
 
 export default function RootLayout({

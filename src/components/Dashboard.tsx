@@ -5,11 +5,12 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 interface DashboardProps {
   concerts: string[]
   setlists: Record<string, string[]>
+  artistName: string
 }
 
 type SortOrder = null | 'desc' | 'asc'
 
-export default function Dashboard({ concerts, setlists }: DashboardProps) {
+export default function Dashboard({ concerts, setlists, artistName }: DashboardProps) {
   // Precompute song sets per concert (stable)
   const SETS = useMemo(() => {
     const s: Record<string, Set<string>> = {}
@@ -187,7 +188,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
   // Copy setlist text
   function copySetlist(concert: string) {
     const songs = setlists[concert] || []
-    const text = `ONE OK ROCK — ${concert}\n${'─'.repeat(30)}\n` +
+    const text = `${artistName} — ${concert}\n${'─'.repeat(30)}\n` +
       songs.map((s, i) => `${String(i + 1).padStart(2, ' ')}. ${s}`).join('\n')
     navigator.clipboard.writeText(text)
       .then(() => showToastMsg('✓ 已复制到剪贴板'))
@@ -206,7 +207,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
   async function playSong(concert: string, song: string) {
     setYtModal({ title: `${concert} — ${song}`, videoId: null, loading: true, minimized: false })
     try {
-      const q = `ONE OK ROCK ${song} ${concert} live`
+      const q = `${artistName} ${song} ${concert} live`
       const res = await fetch(`/api/youtube?q=${encodeURIComponent(q)}`)
       const { videoId } = await res.json()
       setYtModal({ title: `${concert} — ${song}`, videoId, loading: false, minimized: false })
@@ -234,7 +235,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
     ctx.fillStyle = 'rgba(255,255,255,0.6)'
     ctx.font = '11px "Segoe UI", Arial, sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('ONE OK ROCK', W / 2, 17)
+    ctx.fillText(artistName, W / 2, 17)
     ctx.fillStyle = '#fff'
     ctx.font = 'bold 15px "Segoe UI", Arial, sans-serif'
     ctx.fillText(concert, W / 2, 37)
@@ -282,7 +283,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
     <div className="dashboard">
       {/* Title */}
       <div className="title">
-        ONE OK ROCK — Concert Setlist Dashboard
+        {artistName} — Concert Setlist Dashboard
         <span>2010 – 2025 &nbsp;|&nbsp; 15 Tours &nbsp;|&nbsp; 113 Songs</span>
       </div>
 
