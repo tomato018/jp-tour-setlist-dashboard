@@ -38,10 +38,7 @@ export default function Dashboard({ concerts, setlists, artistName }: DashboardP
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(1)
   const [activeTab, setActiveTab] = useState<'stats' | 'setlist' | 'favorites'>('stats')
-  const [favorites, setFavorites] = useState<Set<string>>(() => {
-    if (typeof window === 'undefined') return new Set()
-    try { return new Set(JSON.parse(localStorage.getItem('oor-favorites') ?? '[]')) } catch { return new Set() }
-  })
+  const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [sortOrder, setSortOrder] = useState<SortOrder>(null)
   const colWidths = useRef<Record<number, number>>({})
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -50,6 +47,13 @@ export default function Dashboard({ concerts, setlists, artistName }: DashboardP
   const [ytModal, setYtModal] = useState<{ title: string; videoId: string | null; loading: boolean; minimized: boolean } | null>(null)
   const [user, setUser] = useState<boolean>(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('oor-favorites') ?? '[]')
+      setFavorites(new Set(saved))
+    } catch { /* ignore */ }
+  }, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setUser(!!data.session))
