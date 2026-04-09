@@ -88,6 +88,41 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
+## Authentication System
+
+The app includes an optional login system backed by **Supabase Auth**. It is intentionally lightweight — users can browse all setlists and play YouTube videos without logging in. Auth is only required to persist favorites across devices.
+
+### How it works
+
+| Step | What happens |
+|------|-------------|
+| User clicks **登录 / 注册** in the navbar | `AuthModal` opens |
+| User chooses **Google OAuth** | Redirected to Google, then back to the app via Supabase OAuth callback |
+| User chooses **email magic link** | Supabase sends a one-click login link; no password needed |
+| On return / page load | `supabase.auth.onAuthStateChange` keeps session state in sync |
+| Sign out | `supabase.auth.signOut()` clears the session |
+
+### What's gated
+
+- **Favorites tab** — unauthenticated users see a locked state with a login prompt instead of their saved songs
+- Everything else (setlist browsing, stats, YouTube playback) is fully public
+
+### What's NOT included (potential areas for extension)
+
+- **Row-level security on favorites** — the `favorites` table has RLS defined in the schema, but syncing favorites to the database is not yet implemented; favorites are currently stored in `localStorage` only
+- **Admin / editor role** — there is no role-based access control; all authenticated users have the same permissions
+- **Email/password auth** — only Google OAuth and magic link are supported; adding password auth would require changes to `AuthModal.tsx`
+
+### Setup required for Google OAuth
+
+By default, only email magic link works out of the box. To enable Google login:
+
+1. Go to your Supabase project → **Authentication → Providers → Google**
+2. Enable Google and enter your **Client ID** and **Client Secret** from [Google Cloud Console](https://console.cloud.google.com/) (OAuth 2.0 credentials)
+3. Add your site URL to the allowed redirect URIs in both Google Cloud Console and Supabase
+
+---
+
 ## Database Schema
 
 ```
