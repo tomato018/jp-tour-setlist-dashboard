@@ -383,6 +383,8 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
 
       {/* Setlist Panel */}
       {activeTab === 'setlist' && (
+        <div>
+        <div className="setlist-notice">🎵 点击歌曲名可搜索 YouTube 现场版。由于各场次录像上传情况不同，搜索结果可能来自其他巡演或版本，仅供试听参考。</div>
         <div className="setlist-grid">
           {sel.length === 0 ? (
             <div className="table-wrapper" style={{ gridColumn: '1/-1' }}>
@@ -409,6 +411,7 @@ export default function Dashboard({ concerts, setlists }: DashboardProps) {
               </div>
             )
           })}
+        </div>
         </div>
       )}
 
