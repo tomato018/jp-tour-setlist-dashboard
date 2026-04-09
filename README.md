@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Concert Setlist Dashboard
 
-## Getting Started
+A web dashboard for visualizing and exploring live concert setlists for any artist — built with Next.js 15, Supabase, and Tailwind CSS.
 
-First, run the development server:
+Originally created for ONE OK ROCK (2010–2025, 15 tours, 113 songs), but designed to be forked and adapted for any artist.
+
+---
+
+## Features
+
+- **Statistics view** — song frequency matrix across all tours, sortable by play count, with resizable columns
+- **Setlist view** — card-based layout per tour with copy-to-text and save-as-JPG export
+- **YouTube playback** — click any song to search and play a live version inline, with mini-player support (audio keeps playing while you browse)
+- **Favorites** — heart any song; favorites are deduplicated by song title and persisted locally
+- **Tour filter** — select any combination of tours for cross-tour comparison
+- **Mobile responsive** — optimized layout for small screens
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 15 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS + custom CSS |
+| Database | Supabase (PostgreSQL) |
+| Deployment | Vercel |
+| Video | YouTube Data API v3 |
+
+---
+
+## Fork & Adapt for Any Artist
+
+This project is designed to be reused. To adapt it for a different artist:
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/tomato018/jp-tour-setlist-dashboard.git
+cd jp-tour-setlist-dashboard
+npm install
+```
+
+### 2. Set up Supabase
+
+1. Create a free project at [supabase.com](https://supabase.com)
+2. Go to **SQL Editor** and run `supabase/schema.sql` to create the tables
+3. Edit `supabase/seed.sql` with your artist's tour and setlist data, then run it
+
+### 3. Configure environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+# Artist name — the only value you need to change for a different artist
+NEXT_PUBLIC_ARTIST_NAME=Your Artist Name
+
+# Supabase (from your project's API settings)
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+# YouTube Data API v3 (get a key from Google Cloud Console)
+YOUTUBE_API_KEY=your-youtube-api-key
+```
+
+> `NEXT_PUBLIC_ARTIST_NAME` controls the page title, YouTube search queries, JPG exports, and database lookup — it's the only value you need to change for a new artist.
+
+### 4. Update tour order
+
+Edit `src/app/page.tsx` to define the canonical display order of your tours:
+
+```ts
+const TOUR_ORDER = [
+  '2019 Tour Name',
+  '2021 Arena Tour',
+  // ...
+]
+```
+
+### 5. Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Database Schema
 
-## Learn More
+```
+artists       — artist name and metadata
+tours         — tour name, year, location
+songs         — song titles (unique per artist)
+tour_songs    — many-to-many: which songs appear in which tours, in order
+favorites     — per-user saved songs (RLS enabled, requires Supabase Auth)
+```
 
-To learn more about Next.js, take a look at the following resources:
+Full schema: [`supabase/schema.sql`](supabase/schema.sql)
+Example data: [`supabase/seed.sql`](supabase/seed.sql)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Getting a YouTube API Key
 
-## Deploy on Vercel
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a project → Enable **YouTube Data API v3**
+3. Create an API key under **Credentials**
+4. Add it to `.env.local` as `YOUTUBE_API_KEY`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> The API key is server-side only and never exposed to the browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Deploy to Vercel
+
+1. Push your fork to GitHub
+2. Import the repo at [vercel.com/new](https://vercel.com/new)
+3. Add all environment variables from your `.env.local`
+4. Deploy
+
+---
+
+## YouTube Playback Notice
+
+The play button searches YouTube for a live version of each song. Because concert recordings vary in upload availability, the result may come from a different tour or version — it's intended for listening reference only.
+
+---
+
+## Contributing
+
+Pull requests are welcome. If you've adapted this for another artist, feel free to open an issue with a link to your fork.
+
+---
+
+## License
+
+MIT
